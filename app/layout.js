@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
 import ClientProviders from "@/components/ClientProvider";
-import Center from "@/components/Center";
+import Player from "@/components/Player";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,15 @@ export default function RootLayout({ children }) {
   return (
     <ClientProviders>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={`${inter.className} scrollbar-hide`}>
           <main className="flex">
-            {pathname !== "/login" && <Sidebar />}
-            <div className="h-screen overflow-y-scroll flex-1 bg-black">
+            <Sidebar />
+            <div className="h-screen flex-1 bg-black scrollbar-hide relative">
+              <Header />
               {children}
             </div>
           </main>
+          <Player />
         </body>
       </html>
     </ClientProviders>

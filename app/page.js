@@ -1,5 +1,9 @@
-import Center from "@/components/Center";
+import RecentlyPlayed from "@/components/RecentlyPlayed";
 
 export default function Home() {
-  return <div>home</div>;
+  return (
+    <div>
+      <RecentlyPlayed />
+    </div>
+  );
 }
