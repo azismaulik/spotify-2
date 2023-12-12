@@ -35,27 +35,28 @@ const LikedTracks = () => {
     }
   }, [spotifyApi]);
 
-  console.log(likedSongs);
-
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
-      <section
-        className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-80`}
-      >
-        <div className="w-52 h-52 bg-gradient-to-br from-blue-600 via-purple-800 to-cyan-200 flex justify-center items-center">
-          <HeartIcon className="w-24 h-24 text-white" />
-        </div>
+      {likedSongs ? (
+        <section
+          className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-80`}>
+          <div className="w-52 h-52 bg-gradient-to-br from-blue-600 via-purple-800 to-cyan-200 flex justify-center items-center">
+            <HeartIcon className="w-24 h-24 text-white" />
+          </div>
 
-        <div>
-          <p className="text-xs">Playlist</p>
-          <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">
-            Liked Songs
-          </h1>
-          <p className="mt-4 text-white text-sm font-semibold">
-            {likedSongs?.total} songs
-          </p>
-        </div>
-      </section>
+          <div>
+            <p className="text-xs">Playlist</p>
+            <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">
+              Liked Songs
+            </h1>
+            <p className="mt-4 text-white text-sm font-semibold">
+              {likedSongs?.total} songs
+            </p>
+          </div>
+        </section>
+      ) : (
+        ""
+      )}
       <div className="px-8 flex flex-col space-y-1 pb-28 text-white">
         {likedSongs?.items?.map((track, i) => (
           <Song key={i} track={track} order={i} />

@@ -1,11 +1,8 @@
-import { playlistIdState } from "@/atoms/playlistAtom";
 import { currentTrackIdState, isPlayingState } from "@/atoms/songAtom";
 import useSpotify from "@/hooks/useSpotify";
-import { formatDateToMonthDateYear } from "@/lib/date";
 import { millisToMinutesAndSeconds } from "@/lib/time";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -17,10 +14,19 @@ const Song = ({ order, track }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const playSong = () => {
-    setCurrentTrackId(track.track.id);
+    setCurrentTrackId(track.id);
     setIsPlaying(true);
     spotifyApi.play({
-      uris: [track.track.uri],
+      uris: [track.uri],
+    });
+  };
+
+  const pauseSong = () => {
+    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
+      if (data.body?.is_playing) {
+        spotifyApi.pause();
+        setIsPlaying(false);
+      }
     });
   };
 
@@ -33,8 +39,11 @@ const Song = ({ order, track }) => {
         <div className="w-8">
           {isHovered ? (
             <>
-              {currentTrackId === track.track.id ? (
-                <PauseIcon className="w-5 h-5 hidden group-hover:inline-flex cursor-pointer text-white" />
+              {currentTrackId === track?.id && isPlaying ? (
+                <PauseIcon
+                  onClick={pauseSong}
+                  className="w-5 h-5 hidden group-hover:inline-flex cursor-pointer text-white"
+                />
               ) : (
                 <PlayIcon
                   onClick={playSong}
@@ -44,7 +53,7 @@ const Song = ({ order, track }) => {
             </>
           ) : (
             <>
-              {currentTrackId === track?.track.id && isPlaying ? (
+              {currentTrackId === track?.id && isPlaying ? (
                 <Image
                   src="/playing.gif"
                   alt="playing"
@@ -55,7 +64,7 @@ const Song = ({ order, track }) => {
               ) : (
                 <p
                   className={`${
-                    currentTrackId === track?.track.id && !isPlaying
+                    currentTrackId === track?.id && !isPlaying
                       ? "text-green-600"
                       : "text-white"
                   }`}>
@@ -66,38 +75,26 @@ const Song = ({ order, track }) => {
           )}
         </div>
         <Image
-          src={track?.track.album.images[0].url}
-          alt={track?.track.name}
+          src={track?.album.images[0].url}
+          alt={track?.name}
           width={100}
           height={100}
           className="h-10 w-10"
         />
-        <div>
-          <p
-            className={`${
-              currentTrackId === track?.track.id
-                ? "text-green-600 font-bold"
-                : "text-white"
-            } w-36 lg:w-64 truncate`}>
-            {track?.track.name}
-          </p>
-          <Link
-            href={`/artist/${track?.track.artists[0].id}`}
-            className="w-40 text-sm hover:underline">
-            {track?.track.artists[0].name}
-          </Link>
-        </div>
+        <p
+          className={`${
+            currentTrackId === track?.id
+              ? "text-green-600 font-bold"
+              : "text-white"
+          } w-36 lg:w-64 truncate`}>
+          {track?.name}
+        </p>
       </div>
 
       <div className="flex items-center justify-between ml-auto md:ml-0">
-        <p className="w-44 hidden md:inline text-sm">
-          {track?.track.album.name}
-        </p>
-        <p className="hidden xl:inline text-sm">
-          {formatDateToMonthDateYear(track?.added_at)}
-        </p>
+        <p className="w-44 hidden md:inline text-sm">{track?.album.name}</p>
         <p className="text-sm">
-          {millisToMinutesAndSeconds(track?.track.duration_ms)}
+          {millisToMinutesAndSeconds(track?.duration_ms)}
         </p>
       </div>
     </div>

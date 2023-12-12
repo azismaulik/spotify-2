@@ -9,24 +9,15 @@ function useSongInfo() {
     useRecoilState(currentTrackIdState);
   const [songInfo, setSongInfo] = useState(null);
 
+  const getSongInfo = async () => {
+    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
+      setSongInfo(data.body?.item);
+    });
+  };
+
   useEffect(() => {
-    const fetchSongInfo = async () => {
-      if (currentTrackId) {
-        const trackInfo = await fetch(
-          `https://api.spotify.com/v1/tracks/${currentTrackId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${spotifyApi.getAccessToken()}`,
-            },
-          }
-        ).then((res) => res.json());
-
-        setSongInfo(trackInfo);
-      }
-    };
-
-    fetchSongInfo();
-  }, [currentTrackId, spotifyApi]);
+    getSongInfo();
+  }, [currentTrackId, spotifyApi, songInfo]);
 
   return songInfo;
 }

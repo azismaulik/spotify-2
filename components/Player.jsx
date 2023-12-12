@@ -18,6 +18,7 @@ import {
 import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -29,7 +30,7 @@ const Player = () => {
 
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
 
-  const [volume, setVolume] = useState(40);
+  const [volume, setVolume] = useState(50);
 
   const songInfo = useSongInfo();
 
@@ -62,19 +63,23 @@ const Player = () => {
   };
 
   const skipPrevious = () => {
-    spotifyApi.skipToPrevious();
-    fetchCurrentSong();
+    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
+      spotifyApi.skipToPrevious();
+      setCurrentTrackId(data.body?.item?.id);
+    });
   };
 
   const skipNext = () => {
-    spotifyApi.skipToNext();
-    fetchCurrentSong();
+    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
+      spotifyApi.skipToNext();
+      setCurrentTrackId(data.body?.item?.id);
+    });
   };
 
   useEffect(() => {
     if (spotifyApi.getAccessToken() && !currentTrackId) {
       fetchCurrentSong();
-      setVolume(40);
+      setVolume(50);
     }
   }, [currentTrackIdState, spotifyApi, session, currentTrackId]);
 
@@ -106,21 +111,23 @@ const Player = () => {
   return (
     <div className="sticky bottom-0">
       {songInfo && (
-        <div className="bg-gradient-to-b from-black to-neutral-900 border-t border-neutral-800 text-white grid grid-cols-3 text-xs md:text-base">
+        <div className="bg-gradient-to-b from-black to-neutral-900 border-t border-neutral-900 text-white grid grid-cols-3 text-xs md:text-base">
           <div className="flex items-center space-x-4 px-8 py-3">
             <Image
               src={songInfo?.album.images?.[0]?.url}
               alt=""
               width={80}
               height={80}
-              className="hidden md:inline w-20 h-20 rounded"
+              className="hidden md:inline w-14 h-14 rounded"
               priority
             />
             <div>
               <h3 className="font-semibold">{songInfo?.name}</h3>
-              <p className="text-neutral-400 font-semibold text-xs sm:text-sm">
+              <Link
+                href={`/artist/${songInfo?.artists?.[0]?.id}`}
+                className="text-neutral-500 hover:underline font-semibold text-xs sm:text-sm">
                 {songInfo?.artists?.[0]?.name}
-              </p>
+              </Link>
             </div>
           </div>
 
@@ -156,7 +163,7 @@ const Player = () => {
               />
             ) : (
               <SpeakerXMarkIcon
-                onClick={() => setVolume(40)}
+                onClick={() => setVolume(50)}
                 className="button"
               />
             )}
