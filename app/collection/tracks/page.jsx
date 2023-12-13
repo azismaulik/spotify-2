@@ -16,6 +16,14 @@ const colors = [
   "from-yellow-500",
   "from-pink-500",
   "from-purple-500",
+  "from-violet-500",
+  "from-fuchsia-500",
+  "from-rose-500",
+  "from-sky-500",
+  "from-cyan-500",
+  "from-emerald-500",
+  "from-lime-500",
+  "from-amber-500",
 ];
 
 const LikedTracks = () => {
@@ -39,7 +47,8 @@ const LikedTracks = () => {
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       {likedSongs ? (
         <section
-          className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-80`}>
+          className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-80`}
+        >
           <div className="w-52 h-52 bg-gradient-to-br from-blue-600 via-purple-800 to-cyan-200 flex justify-center items-center">
             <HeartIcon className="w-24 h-24 text-white" />
           </div>
@@ -59,7 +68,7 @@ const LikedTracks = () => {
       )}
       <div className="px-8 flex flex-col space-y-1 pb-28 text-white">
         {likedSongs?.items?.map((track, i) => (
-          <Song key={i} track={track} order={i} />
+          <Song key={i} track={track} order={i} savedTracks={true} />
         ))}
       </div>
     </div>

@@ -9,15 +9,17 @@ function useSongInfo() {
     useRecoilState(currentTrackIdState);
   const [songInfo, setSongInfo] = useState(null);
 
-  const getSongInfo = async () => {
-    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
-      setSongInfo(data.body?.item);
-    });
+  const getCurrentSongInfo = () => {
+    if (currentTrackId) {
+      spotifyApi.getTrack(currentTrackId).then((data) => {
+        setSongInfo(data.body);
+      });
+    }
   };
 
   useEffect(() => {
-    getSongInfo();
-  }, [currentTrackId, spotifyApi, songInfo]);
+    getCurrentSongInfo();
+  }, [currentTrackId]);
 
   return songInfo;
 }

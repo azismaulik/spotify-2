@@ -4,8 +4,8 @@ import useSpotify from "@/hooks/useSpotify";
 import { shuffle } from "lodash";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Song from "../components/Song";
 import Album from "@/components/Album";
+import TopTracks from "../components/TopTracks";
 
 const colors = [
   "from-indigo-900",
@@ -23,14 +23,11 @@ const DetailArtist = () => {
   const [color, setColor] = useState(null);
 
   const [artist, setArtist] = useState(null);
-  const [tracksArtist, setTracksArtist] = useState(null);
 
   const [singleArtist, setSingleArtist] = useState(null);
   const [albumsArtist, setAlbumsArtist] = useState(null);
 
   const [selected, setSelected] = useState("album");
-
-  const [showed, setShowed] = useState(false);
 
   const getArtist = async () => {
     if (spotifyApi.getAccessToken()) {
@@ -38,17 +35,6 @@ const DetailArtist = () => {
         .getArtist(id)
         .then((data) => {
           setArtist(data.body);
-        })
-        .catch((err) => console.log("Something went wrong!", err));
-    }
-  };
-
-  const getTracksArtist = async () => {
-    if (spotifyApi.getAccessToken()) {
-      spotifyApi
-        .getArtistTopTracks(id, "ID")
-        .then((data) => {
-          setTracksArtist(data.body);
         })
         .catch((err) => console.log("Something went wrong!", err));
     }
@@ -72,7 +58,6 @@ const DetailArtist = () => {
 
   useEffect(() => {
     getArtist();
-    getTracksArtist();
     getAlbumsArtist();
   }, [spotifyApi, id]);
 
@@ -87,7 +72,8 @@ const DetailArtist = () => {
       <section className="">
         <div
           style={{ backgroundImage: `url(${artist?.images?.[0]?.url})` }}
-          className="w-full h-72 bg-cover bg-center bg-fixed p-8 flex flex-col justify-end space-y-7">
+          className="w-full h-72 bg-cover bg-center bg-fixed p-8 flex flex-col justify-end space-y-7"
+        >
           <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold mt-8 [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)]">
             {artist?.name}
           </h1>
@@ -97,16 +83,9 @@ const DetailArtist = () => {
           </p>
         </div>
         <div
-          className={`bg-gradient-to-b ${color} to-black to-25% text-white w-full px-8 flex flex-col space-y-1 pt-20 pb-6`}>
-          <h1 className="text-2xl font-bold mb-4">Top Tracks</h1>
-          {tracksArtist?.tracks.slice(0, showed ? 10 : 5).map((track, i) => (
-            <Song key={i} track={track} order={i} />
-          ))}
-          <p
-            className="text-xs font-bold cursor-pointer text-neutral-400 hover:text-white"
-            onClick={() => setShowed(!showed)}>
-            {showed ? "Show less" : "See more"}
-          </p>
+          className={`bg-gradient-to-b ${color} to-black to-25% text-white w-full px-8 flex flex-col space-y-1 pt-20 pb-6`}
+        >
+          <TopTracks id={id} />
         </div>
         <div className="w-full p-8">
           <h1 className="text-2xl font-bold">Discography</h1>
@@ -117,7 +96,8 @@ const DetailArtist = () => {
                 selected === "album"
                   ? "bg-white/90 text-black"
                   : "bg-neutral-800/40 hover:bg-neutral-800/80"
-              } px-4 py-1 rounded-full text-xs font-bold`}>
+              } px-4 py-1 rounded-full text-xs font-bold`}
+            >
               Albums
             </button>
             <button
@@ -126,7 +106,8 @@ const DetailArtist = () => {
                 selected === "single"
                   ? "bg-white/90 text-black"
                   : "bg-neutral-800/40 hover:bg-neutral-800/80"
-              } px-4 py-1 rounded-full text-xs font-bold`}>
+              } px-4 py-1 rounded-full text-xs font-bold`}
+            >
               Singles
             </button>
           </div>

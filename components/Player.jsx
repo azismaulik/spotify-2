@@ -63,16 +63,16 @@ const Player = () => {
   };
 
   const skipPrevious = () => {
-    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
-      spotifyApi.skipToPrevious();
+    spotifyApi.getMyCurrentPlaybackState().then((data) => {
       setCurrentTrackId(data.body?.item?.id);
+      spotifyApi.skipToPrevious();
     });
   };
 
   const skipNext = () => {
-    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
-      spotifyApi.skipToNext();
+    spotifyApi.getMyCurrentPlaybackState().then((data) => {
       setCurrentTrackId(data.body?.item?.id);
+      spotifyApi.skipToNext();
     });
   };
 
@@ -125,7 +125,8 @@ const Player = () => {
               <h3 className="font-semibold">{songInfo?.name}</h3>
               <Link
                 href={`/artist/${songInfo?.artists?.[0]?.id}`}
-                className="text-neutral-500 hover:underline font-semibold text-xs sm:text-sm">
+                className="text-neutral-500 hover:underline font-semibold text-xs sm:text-sm"
+              >
                 {songInfo?.artists?.[0]?.name}
               </Link>
             </div>

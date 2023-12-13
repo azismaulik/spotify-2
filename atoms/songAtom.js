@@ -7,5 +7,10 @@ export const currentTrackIdState = atom({
 
 export const isPlayingState = atom({
   key: "isPlayingState",
-  default: false,
+  default: true,
+});
+
+export const songInfoState = atom({
+  key: "songInfoState",
+  default: null,
 });
