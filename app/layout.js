@@ -22,10 +22,10 @@ export default async function RootLayout({ children }) {
     <ClientProviders session={session}>
       <html lang="en">
         <body className={`${inter.className} scrollbar-hide`}>
-          <main className="flex">
-            <Sidebar />
-            <div className="h-screen flex-1 bg-black scrollbar-hide relative">
-              <Header />
+          <main className="flex w-full min-h-screen">
+            {session && <Sidebar />}
+            <div className="flex-1 scrollbar-hide min-h-screen">
+              {session && <Header />}
               {children}
             </div>
           </main>

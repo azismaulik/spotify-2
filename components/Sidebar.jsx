@@ -24,8 +24,15 @@ export const Sidebar = () => {
   const spotifyApi = useSpotify();
   const { data: session } = useSession();
   const [playlists, setPlaylists] = useState([]);
-  const playlistId = useRecoilValue(playlistIdState);
   const isPlaying = useRecoilValue(isPlayingState);
+
+  const [activePlaylist, setActivePlaylist] = useState(null);
+
+  useEffect(() => {
+    spotifyApi.getMyCurrentPlaybackState().then((data) => {
+      setActivePlaylist(data?.body?.context?.uri);
+    });
+  }, [activePlaylist, spotifyApi]);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
@@ -33,7 +40,7 @@ export const Sidebar = () => {
         setPlaylists(data.body.items);
       });
     }
-  }, [session, spotifyApi, playlistId]);
+  }, [session, spotifyApi]);
 
   return (
     <>
@@ -148,7 +155,9 @@ export const Sidebar = () => {
                 className={`${
                   pathname.includes(playlist.id) && "bg-neutral-900"
                 } ${
-                  playlistId === playlist.id ? "text-green-500" : "text-white"
+                  activePlaylist?.includes(playlist.id)
+                    ? "text-green-500"
+                    : "text-white"
                 } cursor-pointer flex items-center gap-3 rounded hover:bg-neutral-900 p-2 mx-2`}
               >
                 <Image
@@ -165,7 +174,7 @@ export const Sidebar = () => {
                       Playlist &bull; {playlist.owner.display_name}
                     </p>
                   </div>
-                  {isPlaying && playlistId === playlist.id && (
+                  {isPlaying && activePlaylist?.includes(playlist.id) && (
                     <SpeakerWaveIcon className="h-5 w-5 text-green-600" />
                   )}
                 </div>

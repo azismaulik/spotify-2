@@ -56,7 +56,7 @@ const Song = ({ order, track, idPlaylist, savedTracks }) => {
         <div className="w-8">
           {isHovered ? (
             <>
-              {currentTrackId === track.track.id && isPlaying ? (
+              {currentTrackId === track?.track?.id && isPlaying ? (
                 <PauseIcon
                   onClick={pauseSong}
                   className="w-5 h-5 hidden group-hover:inline-flex cursor-pointer text-white"
@@ -70,7 +70,7 @@ const Song = ({ order, track, idPlaylist, savedTracks }) => {
             </>
           ) : (
             <>
-              {currentTrackId === track?.track.id && isPlaying ? (
+              {currentTrackId === track?.track?.id && isPlaying ? (
                 <Image
                   src="/playing.gif"
                   alt="playing"
@@ -81,7 +81,7 @@ const Song = ({ order, track, idPlaylist, savedTracks }) => {
               ) : (
                 <p
                   className={`${
-                    currentTrackId === track?.track.id && !isPlaying
+                    currentTrackId === track?.track?.id && !isPlaying
                       ? "text-green-600"
                       : "text-white"
                   }`}
@@ -93,8 +93,8 @@ const Song = ({ order, track, idPlaylist, savedTracks }) => {
           )}
         </div>
         <Image
-          src={track?.track.album.images[0].url}
-          alt={track?.track.name}
+          src={track?.track?.album.images[0].url}
+          alt={track?.track?.name}
           width={100}
           height={100}
           className="h-10 w-10"

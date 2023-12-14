@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import shuffle from "lodash/shuffle";
 import { playlistIdState, playlistState } from "@/atoms/playlistAtom";
@@ -84,7 +83,7 @@ const PlaylistDetail = () => {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-80`}
+        className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] pb-28`}
       >
         {playlist?.images?.[0]?.url && (
           <Image
@@ -103,12 +102,15 @@ const PlaylistDetail = () => {
             <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">
               {playlist?.name}
             </h1>
-            <p className="mt-4 text-sm">{playlist?.description}</p>
+            <div
+              dangerouslySetInnerHTML={{ __html: playlist?.description }}
+              className="mt-4 text-sm text-neutral-300"
+            />
             <p className="mt-4 text-white text-sm font-semibold">
               {playlist?.owner.display_name} &bull;{" "}
               {playlist?.followers.total ? (
                 <span>
-                  {playlist?.followers.total}{" "}
+                  {playlist?.followers.total.toLocaleString()}{" "}
                   {playlist?.followers.total > 1 ? "Likes" : "Like"} &bull;
                 </span>
               ) : (

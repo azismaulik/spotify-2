@@ -93,7 +93,7 @@ const Player = () => {
 
   const debouncedAdjustVolume = useCallback(
     debounce((volume) => {
-      spotifyApi.setVolume(volume).catch((err) => {});
+      spotifyApi.setVolume(volume)?.catch((err) => {});
     }, 100),
     []
   );
