@@ -33,7 +33,7 @@ const CardCategory = ({ name, image, id }) => {
   return (
     <Link
       href={`/category/${id}`}
-      className={`rounded-lg p-4 flex-1 h-48 ${color} overflow-hidden relative`}
+      className={`rounded-md p-4 flex-1 h-48 ${color} overflow-hidden relative`}
     >
       <Image
         src={image}

@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
@@ -22,9 +21,9 @@ export default async function RootLayout({ children }) {
     <ClientProviders session={session}>
       <html lang="en">
         <body className={`${inter.className} scrollbar-hide`}>
-          <main className="flex w-full min-h-screen">
+          <main className="flex">
             {session && <Sidebar />}
-            <div className="flex-1 scrollbar-hide min-h-screen">
+            <div className="flex-1 scrollbar-hide relative">
               {session && <Header />}
               {children}
             </div>

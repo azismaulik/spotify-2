@@ -10,6 +10,8 @@ const nextConfig = {
       "images.unsplash.com",
       "thisis-images.spotifycdn.com",
       "charts-images.scdn.co",
+      "image-cdn-ak.spotifycdn.com",
+      "image-cdn-fa.spotifycdn.com",
     ],
   },
 };

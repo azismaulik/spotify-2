@@ -83,7 +83,7 @@ const PlaylistDetail = () => {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] pb-28`}
+        className={`flex flex-wrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}
       >
         {playlist?.images?.[0]?.url && (
           <Image
@@ -92,12 +92,12 @@ const PlaylistDetail = () => {
             height={200}
             alt="Playlist"
             priority
-            className="shadow-2xl"
+            className="shadow-2xl mx-auto sm:mx-0"
           />
         )}
 
         {playlist ? (
-          <div>
+          <div className="mx-auto sm:mx-0 w-full sm:w-auto">
             <p className="text-xs">{playlist?.type}</p>
             <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">
               {playlist?.name}

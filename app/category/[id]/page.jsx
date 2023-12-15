@@ -54,7 +54,7 @@ const CategoryDetails = () => {
 
   const getPlaylist = async () => {
     const res = await fetch(
-      `https://api.spotify.com/v1/browse/categories/${id}/playlists?country=ID&limit=50`,
+      `https://api.spotify.com/v1/browse/categories/${id}/playlists?limit=50`,
       {
         headers: {
           Authorization: `Bearer ${spotifyApi.getAccessToken()}`,

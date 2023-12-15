@@ -47,7 +47,7 @@ const LikedTracks = () => {
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       {likedSongs ? (
         <section
-          className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-80`}
+          className={`flex items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[400px] pb-28`}
         >
           <div className="w-52 h-52 bg-gradient-to-br from-blue-600 via-purple-800 to-cyan-200 flex justify-center items-center">
             <HeartIcon className="w-24 h-24 text-white" />

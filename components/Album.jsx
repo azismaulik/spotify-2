@@ -14,6 +14,7 @@ const Album = ({ image, title, release, type, description, id }) => {
         width={200}
         height={200}
         className="rounded-lg object-cover shadow-2xl shadow-black w-full"
+        priority
       />
       <h1 className="text-white font-semibold line-clamp-2">{title}</h1>
 
