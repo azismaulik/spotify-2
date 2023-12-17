@@ -4,6 +4,7 @@ import useSpotify from "@/hooks/useSpotify";
 import { millisToMinutesAndSeconds } from "@/lib/time";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -36,17 +37,17 @@ const Song = ({ track }) => {
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="flex-1 flex gap-3 p-2 rounded-md hover:bg-neutral-800 text-white"
-    >
+      className="flex-1 flex gap-3 p-2 rounded-md hover:bg-neutral-800 text-white">
       <div className="relative w-12 h-12">
         <Image
           src={track.album.images[0].url}
           width={50}
           height={50}
-          alt=""
+          alt={track.name}
+          priority
           className={`${
             isHovered ? "shadow-2xl shadow-black opacity-70" : ""
-          } rounded-md`}
+          } rounded-md aspect-square`}
         />
         {isHovered && (
           <div className="absolute top-0 left-0 w-full h-full bg-black/30 rounded-md">
@@ -65,13 +66,15 @@ const Song = ({ track }) => {
         )}
       </div>
       <div className="flex-1 flex justify-between items-center">
-        <div>
-          <h1 className="text-white font-semibold text-sm sm:text-base">
+        <div className="space-y-1">
+          <h1 className="text-white font-semibold text-sm sm:text-base line-clamp-1">
             {track.name}
           </h1>
-          <p className="text-neutral-500 font-semibold text-xs sm:text-sm">
+          <Link
+            href={`/artist/${track.artists[0].id}`}
+            className="text-neutral-500 font-semibold text-xs sm:text-sm hover:underline">
             {track.artists[0].name}
-          </p>
+          </Link>
         </div>
         <p className="text-neutral-500 font-semibold text-xs sm:text-sm">
           {millisToMinutesAndSeconds(track.duration_ms)}

@@ -83,8 +83,7 @@ const PlaylistDetail = () => {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex flex-wrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}
-      >
+        className={`flex flex-wrap xl:flex-nowrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}>
         {playlist?.images?.[0]?.url && (
           <Image
             src={playlist?.images?.[0]?.url}
@@ -98,7 +97,7 @@ const PlaylistDetail = () => {
 
         {playlist ? (
           <div className="mx-auto sm:mx-0 w-full sm:w-auto">
-            <p className="text-xs">{playlist?.type}</p>
+            <p className="text-sm capitalize">{playlist?.type}</p>
             <h1 className="text-2xl md:text-5xl xl:text-7xl font-bold">
               {playlist?.name}
             </h1>
@@ -128,15 +127,13 @@ const PlaylistDetail = () => {
         {isPlaying && playlistId === id ? (
           <button
             className="mx-8 p-4 rounded-full bg-red-500 hover:scale-105 transition-all duration-200 shadow-2xl mb-6"
-            onClick={pauseSong}
-          >
+            onClick={pauseSong}>
             <PauseIcon className="w-6 h-6 text-black" />
           </button>
         ) : (
           <button
             className="mx-8 p-4 rounded-full bg-green-500 hover:scale-105 transition-all duration-200 shadow-2xl mb-6"
-            onClick={playSong}
-          >
+            onClick={playSong}>
             <PlayIcon className="w-6 h-6 text-black" />
           </button>
         )}

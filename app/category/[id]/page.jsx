@@ -75,8 +75,7 @@ const CategoryDetails = () => {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-r from-${color} to-black text-white p-8 w-full h-80`}
-      >
+        className={`flex items-end space-x-7 bg-gradient-to-r from-${color} to-black text-white p-8 w-full h-80`}>
         <h1 className="text-xl sm:text-3xl lg:text-5xl xl:text-7xl font-bold">
           {name}
         </h1>
@@ -90,6 +89,7 @@ const CategoryDetails = () => {
             description={playlist?.description}
             type={playlist?.type}
             id={playlist?.id}
+            owner={playlist?.owner?.display_name}
           />
         ))}
       </div>
