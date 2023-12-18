@@ -16,28 +16,34 @@ const Song = ({ track }) => {
     useRecoilState(currentTrackIdState);
   const [playlisId, setPlaylisId] = useRecoilState(playlistIdState);
 
-  //   const handlePlayPause = () => {
-  //     if (isPlaying) {
-  //       spotifyApi.pause();
-  //       setIsPlaying(false);
-  //       setCurrentTrackId(track.id);
-  //     } else {
-  //       if (currentTrackId === track.id) {
-  //         spotifyApi.play();
-  //         setIsPlaying(true);
-  //       } else {
-  //         spotifyApi.play({ uris: [track.uri] });
-  //         setIsPlaying(true);
-  //         setPlaylisId(null);
-  //       }
-  //     }
-  //   };
+  const playSong = () => {
+    if (currentTrackId === track.id) {
+      spotifyApi.play();
+      setIsPlaying(true);
+    } else {
+      setCurrentTrackId(track.id);
+      setIsPlaying(true);
+      spotifyApi.play({
+        uris: [track.uri],
+      });
+    }
+  };
+
+  const pauseSong = () => {
+    spotifyApi.getMyCurrentPlayingTrack().then((data) => {
+      if (data.body?.is_playing) {
+        spotifyApi.pause();
+        setIsPlaying(false);
+      }
+    });
+  };
 
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="flex-1 flex gap-3 p-2 rounded-md hover:bg-neutral-800 text-white">
+      className="flex-1 flex gap-3 p-2 rounded-md hover:bg-neutral-800 text-white"
+    >
       <div className="relative w-12 h-12">
         <Image
           src={track.album.images[0].url}
@@ -53,12 +59,12 @@ const Song = ({ track }) => {
           <div className="absolute top-0 left-0 w-full h-full bg-black/30 rounded-md">
             {isPlaying && currentTrackId === track.id ? (
               <PauseIcon
-                // onClick={handlePlayPause}
+                onClick={pauseSong}
                 className="w-5 h-5 text-green-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
               />
             ) : (
               <PlayIcon
-                // onClick={handlePlayPause}
+                onClick={playSong}
                 className="w-5 h-5 text-green-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
               />
             )}
@@ -72,7 +78,8 @@ const Song = ({ track }) => {
           </h1>
           <Link
             href={`/artist/${track.artists[0].id}`}
-            className="text-neutral-500 font-semibold text-xs sm:text-sm hover:underline">
+            className="text-neutral-500 font-semibold text-xs sm:text-sm hover:underline"
+          >
             {track.artists[0].name}
           </Link>
         </div>

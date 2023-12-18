@@ -39,7 +39,8 @@ const TopResult = ({ track }) => {
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="bg-neutral-800/60 hover:bg-neutral-800 transition-all duration-300 p-5 rounded-md relative overflow-hidden">
+      className="bg-neutral-800/60 hover:bg-neutral-800 transition-all duration-300 p-5 rounded-md relative overflow-hidden"
+    >
       {track?.album?.images?.[0]?.url && (
         <Image
           src={track?.album?.images?.[0]?.url}
@@ -56,7 +57,8 @@ const TopResult = ({ track }) => {
       <div className="flex items-center gap-2 mt-4">
         <Link
           href={`/artist/${track?.artists?.[0]?.id}`}
-          className="text-white hover:underline font-semibold text-xs sm:text-sm">
+          className="text-white hover:underline font-semibold text-xs sm:text-sm"
+        >
           {track?.artists?.[0]?.name}
         </Link>
         <p className="text-neutral-500 font-semibold text-xs sm:text-sm">
@@ -66,8 +68,9 @@ const TopResult = ({ track }) => {
       </div>
       <button
         onClick={handlePlayPause}
-        className={`p-4 bg-green-500 text-black rounded-full shadow-2xl shadow-black absolute right-6 bottom-6`}>
-        {isPlaying ? (
+        className={`p-4 bg-green-500 text-black rounded-full shadow-2xl shadow-black absolute right-6 bottom-6`}
+      >
+        {isPlaying && currentTrackId === track.id ? (
           <PauseIcon className="w-6 h-6" />
         ) : (
           <PlayIcon className="w-6 h-6" />

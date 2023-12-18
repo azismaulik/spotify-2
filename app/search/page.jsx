@@ -112,7 +112,8 @@ const Search = () => {
           {query && (
             <div
               onClick={() => setQuery("")}
-              className="absolute top-2 right-1 text-white hover:text-neutral-700 cursor-pointer transition-all duration-300">
+              className="absolute top-2 right-1 text-white hover:text-neutral-700 cursor-pointer transition-all duration-300"
+            >
               <XCircleIcon className="w-8 h-8" />
             </div>
           )}
@@ -130,7 +131,8 @@ const Search = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            className="bg-neutral-700/40 hover:bg-neutral-600/60 transition-all duration-300 py-3 px-5 rounded-full">
+            className="bg-neutral-700/40 hover:bg-neutral-600/60 transition-all duration-300 py-3 px-5 rounded-full"
+          >
             Search
           </button>
         )}
@@ -145,7 +147,8 @@ const Search = () => {
                 category === selectedCategory
                   ? "bg-white text-neutral-900 font-semibold"
                   : "text-white bg-neutral-900 hover:bg-neutral-800"
-              } rounded-xl py-1 px-4 cursor-pointer capitalize`}>
+              } rounded-xl py-1 px-4 cursor-pointer capitalize`}
+            >
               {category}
             </p>
           ))}
@@ -169,12 +172,13 @@ const Search = () => {
               </div>
             </div>
             <h1 className="text-white text-3xl font-bold mb-4 mt-8">Artists</h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
               {artists?.slice(0, 6).map((artist, i) => (
                 <Link
                   href={`/artist/${artist?.id}`}
                   key={i}
-                  className="flex-1 rounded-md p-3 bg-neutral-900 hover:bg-neutral-800 cursor-pointer">
+                  className="flex-1 rounded-md p-3 bg-neutral-900 hover:bg-neutral-800 cursor-pointer"
+                >
                   <Image
                     className="rounded-full shadow-2xl shadow-black aspect-square"
                     src={artist?.images[0]?.url}
@@ -192,7 +196,7 @@ const Search = () => {
             </div>
 
             <h1 className="text-white text-3xl font-bold mb-4 mt-8">Albums</h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
               {albums?.slice(0, 6).map((album, i) => (
                 <Album
                   key={i}
@@ -210,7 +214,7 @@ const Search = () => {
             <h1 className="text-white text-3xl font-bold mb-4 mt-8">
               Playlists
             </h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
               {playlists?.slice(0, 6).map((playlist, i) => (
                 <Album
                   key={i}
@@ -226,7 +230,7 @@ const Search = () => {
             <h1 className="text-white text-3xl font-bold mb-4 mt-8">
               Podcasts
             </h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
               {shows?.slice(0, 6).map((show, i) => (
                 <Album
                   key={i}
@@ -241,7 +245,7 @@ const Search = () => {
             <h1 className="text-white text-3xl font-bold mb-4 mt-8">
               Episodes
             </h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
               {episodes?.slice(0, 6).map((episode, i) => (
                 <Album
                   key={i}
@@ -264,12 +268,13 @@ const Search = () => {
         )}
 
         {selectedCategory === "artists" && (
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
             {artists?.map((artist, i) => (
               <Link
                 href={`/artist/${artist?.id}`}
                 key={i}
-                className="flex-1 rounded-md p-3 bg-neutral-900 hover:bg-neutral-800 cursor-pointer">
+                className="flex-1 rounded-md p-3 bg-neutral-900 hover:bg-neutral-800 cursor-pointer"
+              >
                 <Image
                   className="rounded-full shadow-2xl shadow-black aspect-square"
                   src={artist?.images[0]?.url || "/no-image.webp"}
@@ -288,7 +293,7 @@ const Search = () => {
         )}
 
         {selectedCategory === "albums" && (
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
             {albums?.map((album, i) => (
               <Album
                 key={i}
@@ -305,7 +310,7 @@ const Search = () => {
         )}
 
         {selectedCategory === "playlists" && (
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
             {playlists?.map((playlist, i) => (
               <Album
                 key={i}
@@ -320,7 +325,7 @@ const Search = () => {
         )}
 
         {selectedCategory === "podcasts" && (
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
             {shows?.map((show, i) => (
               <Album
                 key={i}
@@ -334,7 +339,7 @@ const Search = () => {
         )}
 
         {selectedCategory === "episodes" && (
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
             {episodes?.map((episode, i) => (
               <Album
                 key={i}
@@ -352,7 +357,7 @@ const Search = () => {
       {!search && (
         <>
           <h1 className="text-white text-3xl font-bold mb-2 mt-8">Browse</h1>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
             {categories?.map((category, i) => (
               <Cardcategory
                 key={i}

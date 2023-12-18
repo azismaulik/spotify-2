@@ -14,3 +14,8 @@ export const likedSongsState = atom({
   key: "likedSongsState",
   default: [],
 });
+
+export const AlbumIdState = atom({
+  key: "AlbumIdState",
+  default: null,
+});
