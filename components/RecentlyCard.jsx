@@ -13,9 +13,9 @@ const RecentlyCard = ({
       <Image
         src={image}
         alt="image"
-        width={100}
-        height={100}
-        className="rounded-l w-20 aspect-square"
+        width={60}
+        height={60}
+        className="rounded-l aspect-square"
         priority
       />
       <div className="flex justify-between items-center w-full px-4">
@@ -31,16 +31,14 @@ const RecentlyCard = ({
             />
             <div
               onClick={handlePauseSong}
-              className="p-3 rounded-full bg-green-500 text-black hidden group-hover:block cursor-pointer shadow-2xl"
-            >
+              className="p-3 rounded-full bg-green-500 text-black hidden group-hover:block cursor-pointer shadow-2xl">
               <PauseIcon className="w-6 h-6" />
             </div>
           </>
         ) : (
           <div
             onClick={handlePlaySong}
-            className="p-3 rounded-full bg-green-500 text-black hidden group-hover:block cursor-pointer shadow-2xl"
-          >
+            className="p-3 rounded-full bg-green-500 text-black hidden group-hover:block cursor-pointer shadow-2xl">
             <PlayIcon className="w-6 h-6" />
           </div>
         )}

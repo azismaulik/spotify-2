@@ -2,6 +2,7 @@
 
 import RecentlyPlayed from "@/components/RecentlyPlayed";
 import Show from "@/components/Show";
+import { getGreeting } from "@/lib/greeting";
 import { shuffle } from "lodash";
 import { useEffect, useState } from "react";
 
@@ -15,7 +16,6 @@ const colors = [
 
 export default function Home() {
   const [color, setColor] = useState(null);
-  const hours = new Date().getHours();
 
   useEffect(() => {
     setColor(shuffle(colors).pop());
@@ -23,11 +23,8 @@ export default function Home() {
 
   return (
     <div
-      className={`bg-gradient-to-b ${color} to-[200px] to-black text-white p-8 w-full`}
-    >
-      <h1 className="text-3xl font-bold mt-14">
-        Good {hours > 11 ? "Afternoon" : hours > 17 ? "Evening" : "Morning"}
-      </h1>
+      className={`bg-gradient-to-b ${color} to-[200px] to-black text-white p-8 w-full`}>
+      <h1 className="text-3xl font-bold mt-14">{getGreeting()}</h1>
       <RecentlyPlayed />
       {/* <Show /> */}
     </div>
