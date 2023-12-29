@@ -106,7 +106,7 @@ const Search = () => {
   };
 
   return (
-    <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide px-8 pt-16 pb-20">
+    <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide px-4 md:px-8 pt-16 pb-20">
       <div className="flex-1 flex gap-4">
         <div className="w-full relative">
           {query && (

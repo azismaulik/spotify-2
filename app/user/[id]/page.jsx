@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useParams } from "next/navigation";
 
 const UserDetail = () => {
@@ -8,7 +9,8 @@ const UserDetail = () => {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex flex-wrap xl:flex-nowrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}>
+        className={`flex flex-wrap xl:flex-nowrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}
+      >
         {playlist?.images?.[0]?.url && (
           <Image
             src={playlist?.images?.[0]?.url}

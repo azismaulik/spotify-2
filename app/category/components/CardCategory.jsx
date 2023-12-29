@@ -21,6 +21,13 @@ const colors = [
   "bg-lime-600",
   "bg-amber-600",
   "bg-indigo-600",
+  "bg-teal-600",
+  "bg-slate-600",
+  "bg-gray-600",
+  "bg-zinc-600",
+  "bg-neutral-600",
+  "bg-stone-600",
+  "bg-black",
 ];
 
 const CardCategory = ({ name, image, id }) => {
@@ -40,7 +47,7 @@ const CardCategory = ({ name, image, id }) => {
         alt={name}
         width={100}
         height={100}
-        className="object-contain absolute -right-2 bottom-0 rotate-12 aspect-square"
+        className="object-contain absolute -right-2 bottom-0 rotate-12 aspect-square w-auto h-auto"
         priority
       />
       <h1 className="text-white font-bold text-lg capitalize">

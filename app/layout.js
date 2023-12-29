@@ -6,6 +6,7 @@ import Player from "@/components/Player";
 import Header from "@/components/Header";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import MenuMobile from "@/components/MenuMobile";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default async function RootLayout({ children }) {
             </div>
           </main>
           <Player />
+          <MenuMobile />
         </body>
       </html>
     </ClientProviders>

@@ -15,28 +15,52 @@ import {
   SpeakerWaveIcon,
   SpeakerXMarkIcon,
 } from "@heroicons/react/24/solid";
-import { debounce } from "lodash";
+import { debounce, shuffle } from "lodash";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
+const colors = [
+  "from-zinc-700",
+  "from-neutral-700",
+  "from-stone-700",
+  "from-red-700",
+  "from-orange-700",
+  "from-amber-700",
+  "from-lime-700",
+  "from-green-700",
+  "from-emerald-700",
+  "from-teal-700",
+  "from-cyan-700",
+  "from-sky-700",
+  "from-blue-700",
+  "from-indigo-700",
+  "from-violet-700",
+  "from-purple-700",
+  "from-fuchsia-700",
+  "from-pink-700",
+  "from-rose-700",
+  "from-black",
+];
+
 const Player = () => {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState(currentTrackIdState);
-
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
-
   const [volume, setVolume] = useState(50);
-
   const songInfo = useSongInfo();
-
   const [repeat, setRepeat] = useState(false);
+  const [shuffleSong, setShuffleSong] = useState(false);
 
-  const [shuffle, setShuffle] = useState(false);
+  const [color, setColor] = useState(null);
+
+  useEffect(() => {
+    setColor(shuffle(colors).pop());
+  }, []);
 
   const fetchCurrentSong = () => {
     if (!songInfo) {
@@ -93,7 +117,11 @@ const Player = () => {
 
   const debouncedAdjustVolume = useCallback(
     debounce((volume) => {
-      spotifyApi.setVolume(volume)?.catch((err) => {});
+      if (isPlaying) {
+        spotifyApi.setVolume(volume)?.catch((err) => {
+          console.log(err);
+        });
+      }
     }, 100),
     []
   );
@@ -104,40 +132,47 @@ const Player = () => {
   };
 
   const handleShuffle = () => {
-    spotifyApi.setShuffle(!shuffle).catch((err) => {});
-    setShuffle(!shuffle);
+    spotifyApi.setShuffle(!shuffleSong).catch((err) => {});
+    setShuffleSong(!shuffleSong);
   };
 
   return (
-    <div className="sticky bottom-0">
+    <div className={`sticky bottom-20 sm:bottom-0`}>
       {songInfo && (
-        <div className="bg-gradient-to-b from-black to-neutral-900 border-t border-neutral-900 text-white grid grid-cols-3 text-xs md:text-base">
-          <div className="flex items-center space-x-4 px-8 py-3">
+        <div
+          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}
+        >
+          <div className="flex items-center space-x-4">
             <Image
               src={songInfo?.album.images?.[0]?.url}
               alt=""
               width={80}
               height={80}
-              className="hidden md:inline w-14 h-14 rounded"
+              className="w-14 h-14 rounded"
               priority
             />
             <div>
-              <h3 className="font-semibold">{songInfo?.name}</h3>
+              <h3 className="font-semibold truncate">{songInfo?.name}</h3>
               <Link
                 href={`/artist/${songInfo?.artists?.[0]?.id}`}
-                className="text-neutral-500 hover:underline font-semibold text-xs sm:text-sm"
+                className="text-neutral-400 hover:underline font-semibold text-xs sm:text-sm truncate"
               >
                 {songInfo?.artists?.[0]?.name}
               </Link>
             </div>
           </div>
 
-          <div className="flex items-center justify-evenly">
+          <div className="flex items-center gap-8">
             <ArrowsRightLeftIcon
               onClick={handleShuffle}
-              className={`${shuffle ? "text-green-500" : ""} button`}
+              className={`${
+                shuffle ? "text-green-500" : ""
+              } button hidden sm:inline-flex`}
             />
-            <BackwardIcon onClick={skipPrevious} className="button" />
+            <BackwardIcon
+              onClick={skipPrevious}
+              className="button hidden sm:inline-flex"
+            />
             {isPlaying ? (
               <PauseCircleIcon
                 onClick={handlePlayPause}
@@ -149,14 +184,19 @@ const Player = () => {
                 className="button w-10 h-10"
               />
             )}
-            <ForwardIcon onClick={skipNext} className="button" />
+            <ForwardIcon
+              onClick={skipNext}
+              className="button hidden sm:inline-flex"
+            />
             <ArrowPathRoundedSquareIcon
               onClick={handleRepeat}
-              className={`${repeat ? "text-green-500" : ""} button`}
+              className={`${
+                repeat ? "text-green-500" : ""
+              } button hidden sm:inline-flex`}
             />
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pr-5">
+          <div className="hidden sm:flex items-center justify-end space-x-3 pr-5">
             {volume > 0 ? (
               <SpeakerWaveIcon
                 onClick={() => setVolume(0)}

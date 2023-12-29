@@ -83,7 +83,7 @@ const DetailArtist = () => {
           </p>
         </div>
         <div
-          className={`bg-gradient-to-b ${color} to-black to-25% text-white w-full px-8 flex flex-col space-y-1 pt-20 pb-6`}
+          className={`bg-gradient-to-b ${color} to-black to-25% text-white w-full px-4 md:px-8 flex flex-col space-y-1 pt-20 pb-6`}
         >
           <TopTracks id={id} />
         </div>

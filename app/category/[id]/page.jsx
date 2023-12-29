@@ -75,12 +75,13 @@ const CategoryDetails = () => {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-r from-${color} to-black text-white p-8 w-full h-80`}>
+        className={`flex items-end space-x-7 bg-gradient-to-r from-${color} to-black text-white p-8 w-full h-80`}
+      >
         <h1 className="text-xl sm:text-3xl lg:text-5xl xl:text-7xl font-bold">
           {name}
         </h1>
       </section>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl-grid-cols-7 gap-4 mt-6 w-full px-8 py-20">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl-grid-cols-7 gap-4 mt-6 w-full px-4 md:px-8 py-20">
         {playlist?.map((playlist, i) => (
           <Album
             key={i}

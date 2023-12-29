@@ -23,7 +23,8 @@ export default function Home() {
 
   return (
     <div
-      className={`bg-gradient-to-b ${color} to-[200px] to-black text-white p-8 w-full`}>
+      className={`bg-gradient-to-b ${color} to-[200px] to-black text-white p-8 w-full min-h-screen`}
+    >
       <h1 className="text-3xl font-bold mt-14">{getGreeting()}</h1>
       <RecentlyPlayed />
       {/* <Show /> */}

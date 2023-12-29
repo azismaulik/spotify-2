@@ -64,7 +64,7 @@ const Profile = () => {
 
   useEffect(() => {
     setColor(shuffle(colors).pop());
-  });
+  }, []);
 
   useEffect(() => {
     getProfile();
@@ -72,11 +72,11 @@ const Profile = () => {
     getTopTracks();
   }, []);
 
-  console.log(topArtists);
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section
-        className={`flex flex-wrap xl:flex-nowrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}>
+        className={`flex flex-wrap xl:flex-nowrap items-end space-x-7 bg-gradient-to-b ${color} to-black text-white p-8 w-full h-[450px] sm:h-[400px] sm:pb-28 text-center sm:text-start`}
+      >
         <Image
           src={profile?.images?.[0]?.url || "/no-image.webp"}
           width={200}
@@ -113,13 +113,14 @@ const Profile = () => {
           ""
         )}
       </section>
-      <section className="px-8">
+      <section className="px-4 md:px-8">
         <h1 className="text-2xl font-bold">Top artist this month</h1>
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {topArtists?.items?.slice(0, 6).map((artist) => (
+          {topArtists?.items?.slice(0, 6).map((artist, i) => (
             <div
-              key={artist?.id}
-              className="p-4 bg-neutral-900 rounded-md hover:bg-neutral-800 relative group">
+              key={i}
+              className="p-4 bg-neutral-900 rounded-md hover:bg-neutral-800 relative group"
+            >
               <Image
                 src={artist?.images?.[0]?.url || "/no-image.webp"}
                 width={200}
@@ -134,7 +135,8 @@ const Profile = () => {
               <p className="mt-2 text-sm text-neutral-400">Artist</p>
               <div
                 onClick={() => playSongByArtist(artist.id)}
-                className="absolute top-1/2 right-5 hidden group-hover:block bg-green-500 rounded-full text-black p-3 cursor-pointer">
+                className="absolute top-1/2 right-5 hidden group-hover:block bg-green-500 rounded-full text-black p-3 cursor-pointer"
+              >
                 <PlayIcon width={23} height={23} />
               </div>
             </div>
@@ -142,10 +144,13 @@ const Profile = () => {
         </div>
       </section>
 
-      <section className="mt-6 px-8">
+      <section className="mt-6 px-4 md:px-8">
         <h1 className="text-2xl font-bold mb-4">Top tracks this month</h1>
         {topTracks?.items?.map((track, i) => (
-          <div className="grid grid-cols-3 items-center gap-4 p-3 group hover:bg-neutral-900 rounded">
+          <div
+            key={i}
+            className="grid grid-cols-3 items-center gap-4 p-3 group hover:bg-neutral-900 rounded"
+          >
             <div className="flex gap-4 items-center">
               <p>{i + 1}</p>
               <Image

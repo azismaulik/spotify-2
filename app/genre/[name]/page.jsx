@@ -1,14 +1,10 @@
 "use client";
 
-import { isPlayingState } from "@/atoms/songAtom";
 import useSpotify from "@/hooks/useSpotify";
-import { set, shuffle } from "lodash";
+import { shuffle } from "lodash";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 import Song from "../components/Song";
-import Image from "next/image";
-import { getRandomPictureByKeyword } from "@/app/api/generateImage";
 
 const colors = [
   "from-red-600",
@@ -94,7 +90,7 @@ const GenreTracks = () => {
       </section>
 
       <div
-        className={`px-8 flex flex-col space-y-1 py-20 text-white bg-gradient-to-b ${color} to-black to-[200px] w-full`}
+        className={`px-4 md:px-8 flex flex-col space-y-1 py-20 text-white bg-gradient-to-b ${color} to-black to-[200px] w-full`}
       >
         <h1 className="text-2xl font-bold mb-10">{name} Songs</h1>
         {tracks?.tracks?.items?.map((track, i) => (

@@ -97,8 +97,6 @@ const AlbumDetail = () => {
     }
   }, [album, spotifyApi]);
 
-  console.log(artistAlbum);
-
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide pb-12">
       <section
@@ -160,12 +158,12 @@ const AlbumDetail = () => {
             <PlayIcon className="w-6 h-6 text-black" />
           </button>
         )}
-        <div className="px-8 flex flex-col space-y-1 pb-12 text-white">
+        <div className="px-4 md:px-8 flex flex-col space-y-1 pb-12 text-white">
           {album?.tracks.items.map((track, i) => (
             <Song key={i} track={track} order={i} albumId={id} />
           ))}
         </div>
-        <div className="text-neutral-400 px-8">
+        <div className="text-neutral-400 px-4 md:px-8">
           <h1 className="text-sm font-bold">
             {formatDateToMonthDateYear(album?.release_date)}
           </h1>
@@ -177,7 +175,7 @@ const AlbumDetail = () => {
           ))}
         </div>
 
-        <div className="mt-20 px-8">
+        <div className="mt-20 px-4 md:px-8">
           <h1 className="text-white  text-3xl font-bold mb-4 mt-8">
             More by {album?.artists[0]?.name}
           </h1>
