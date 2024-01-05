@@ -65,8 +65,6 @@ const DetailArtist = () => {
     setColor(shuffle(colors).pop());
   }, [id]);
 
-  console.log(albumsArtist);
-
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <section className="">
@@ -112,27 +110,30 @@ const DetailArtist = () => {
             </button>
           </div>
           {selected === "album" && (
-            <div className="flex overflow-x-auto scrollbar-hide space-x-3 mt-6 w-full">
-              {albumsArtist?.map((album, i) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 mt-6 w-full">
+              {albumsArtist?.slice(0, 7)?.map((album, i) => (
                 <Album
                   key={i}
                   image={album?.images?.[0]?.url}
                   title={album?.name}
                   release={album?.release_date}
                   type={album?.album_type}
+                  id={album?.id}
                 />
               ))}
             </div>
           )}
           {selected === "single" && (
-            <div className="flex overflow-x-auto scrollbar-hide space-x-3 mt-6 w-full">
-              {singleArtist?.map((album, i) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 mt-6 w-full">
+              {singleArtist?.slice(0, 7)?.map((album, i) => (
                 <Album
                   key={i}
                   image={album?.images?.[0]?.url}
                   title={album?.name}
                   release={album?.release_date}
-                  type={album?.album_type}
+                  owner={album?.artists[0].name}
+                  type="album"
+                  id={album?.id}
                 />
               ))}
             </div>

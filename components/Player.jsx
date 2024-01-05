@@ -22,29 +22,6 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-const colors = [
-  "from-zinc-700",
-  "from-neutral-700",
-  "from-stone-700",
-  "from-red-700",
-  "from-orange-700",
-  "from-amber-700",
-  "from-lime-700",
-  "from-green-700",
-  "from-emerald-700",
-  "from-teal-700",
-  "from-cyan-700",
-  "from-sky-700",
-  "from-blue-700",
-  "from-indigo-700",
-  "from-violet-700",
-  "from-purple-700",
-  "from-fuchsia-700",
-  "from-pink-700",
-  "from-rose-700",
-  "from-black",
-];
-
 const Player = () => {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
@@ -53,14 +30,8 @@ const Player = () => {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [volume, setVolume] = useState(50);
   const songInfo = useSongInfo();
-  const [repeat, setRepeat] = useState(false);
+  const [repeat, setRepeat] = useState(null);
   const [shuffleSong, setShuffleSong] = useState(false);
-
-  const [color, setColor] = useState(null);
-
-  useEffect(() => {
-    setColor(shuffle(colors).pop());
-  }, []);
 
   const fetchCurrentSong = () => {
     if (!songInfo) {
@@ -69,6 +40,8 @@ const Player = () => {
 
         spotifyApi.getMyCurrentPlaybackState().then((data) => {
           setIsPlaying(data.body?.is_playing);
+          setRepeat(data.body?.repeat_state);
+          setShuffleSong(data.body?.shuffle_state);
         });
       });
     }
@@ -103,7 +76,6 @@ const Player = () => {
   useEffect(() => {
     if (spotifyApi.getAccessToken() && !currentTrackId) {
       fetchCurrentSong();
-      setVolume(50);
     }
   }, [currentTrackIdState, spotifyApi, session, currentTrackId]);
 
@@ -127,8 +99,10 @@ const Player = () => {
   );
 
   const handleRepeat = () => {
-    spotifyApi.setRepeat(repeat ? "off" : "context").catch((err) => {});
-    setRepeat(!repeat);
+    spotifyApi
+      .setRepeat(repeat === "context" ? "off" : "context")
+      .catch((err) => {});
+    setRepeat(repeat === "context" ? "off" : "context");
   };
 
   const handleShuffle = () => {
@@ -140,7 +114,7 @@ const Player = () => {
     <div className={`sticky bottom-20 sm:bottom-0`}>
       {songInfo && (
         <div
-          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}
+          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 from-black to-neutral-900 border-t border-gray-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}
         >
           <div className="flex items-center space-x-4">
             <Image
@@ -166,7 +140,7 @@ const Player = () => {
             <ArrowsRightLeftIcon
               onClick={handleShuffle}
               className={`${
-                shuffle ? "text-green-500" : ""
+                shuffleSong ? "text-green-500" : "text-white"
               } button hidden sm:inline-flex`}
             />
             <BackwardIcon
@@ -191,7 +165,7 @@ const Player = () => {
             <ArrowPathRoundedSquareIcon
               onClick={handleRepeat}
               className={`${
-                repeat ? "text-green-500" : ""
+                repeat === "context" ? "text-green-500" : ""
               } button hidden sm:inline-flex`}
             />
           </div>
