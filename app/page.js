@@ -1,6 +1,9 @@
 "use client";
 
+import NewRelease from "@/components/NewRelease";
+import PopularPlaylist from "@/components/PopularPlaylist";
 import RecentlyPlayed from "@/components/RecentlyPlayed";
+import RelatedArtist from "@/components/RelatedArtist";
 import Show from "@/components/Show";
 import { getGreeting } from "@/lib/greeting";
 import { shuffle } from "lodash";
@@ -27,6 +30,10 @@ export default function Home() {
     >
       <h1 className="text-3xl font-bold mt-14">{getGreeting()}</h1>
       <RecentlyPlayed />
+      <PopularPlaylist />
+      <NewRelease />
+      <RelatedArtist />
+
       {/* <Show /> */}
     </div>
   );

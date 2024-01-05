@@ -22,13 +22,6 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-const colors = [
-  "from-zinc-700",
-  "from-neutral-700",
-  "from-stone-700",
-  "from-black",
-];
-
 const Player = () => {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
@@ -37,14 +30,8 @@ const Player = () => {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [volume, setVolume] = useState(50);
   const songInfo = useSongInfo();
-  const [repeat, setRepeat] = useState(false);
+  const [repeat, setRepeat] = useState(null);
   const [shuffleSong, setShuffleSong] = useState(false);
-
-  const [color, setColor] = useState(null);
-
-  useEffect(() => {
-    setColor(shuffle(colors).pop());
-  }, []);
 
   const fetchCurrentSong = () => {
     if (!songInfo) {
@@ -55,6 +42,8 @@ const Player = () => {
 
         spotifyApi.getMyCurrentPlaybackState().then((data) => {
           setIsPlaying(data.body?.is_playing);
+          setRepeat(data.body?.repeat_state);
+          setShuffleSong(data.body?.shuffle_state);
         });
       });
     }
@@ -89,7 +78,6 @@ const Player = () => {
   useEffect(() => {
     if (spotifyApi.getAccessToken() && !currentTrackId) {
       fetchCurrentSong();
-      setVolume(50);
     }
   }, [currentTrackIdState, spotifyApi, session, currentTrackId]);
 
@@ -113,8 +101,10 @@ const Player = () => {
   );
 
   const handleRepeat = () => {
-    spotifyApi.setRepeat(repeat ? "off" : "context").catch((err) => {});
-    setRepeat(!repeat);
+    spotifyApi
+      .setRepeat(repeat === "context" ? "off" : "context")
+      .catch((err) => {});
+    setRepeat(repeat === "context" ? "off" : "context");
   };
 
   const handleShuffle = () => {
@@ -126,7 +116,7 @@ const Player = () => {
     <div>
       {songInfo && (
         <div
-          className={`bg-gradient-to-b rounded sm:rounded-none shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}>
+          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}>
           <div className="flex items-center space-x-4">
             <Image
               src={songInfo?.album.images?.[0]?.url}
@@ -150,7 +140,7 @@ const Player = () => {
             <ArrowsRightLeftIcon
               onClick={handleShuffle}
               className={`${
-                shuffleSong ? "text-green-500" : ""
+                shuffle ? "text-green-500" : ""
               } button hidden sm:inline-flex`}
             />
             <BackwardIcon
@@ -175,7 +165,7 @@ const Player = () => {
             <ArrowPathRoundedSquareIcon
               onClick={handleRepeat}
               className={`${
-                repeat ? "text-green-500" : ""
+                repeat === "context" ? "text-green-500" : ""
               } button hidden sm:inline-flex`}
             />
           </div>

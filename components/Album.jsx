@@ -17,16 +17,17 @@ const Album = ({
   return (
     <Link
       href={`/${type}/${id}`}
-      className="flex-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 transition-all duration-300 p-3">
+      className="flex-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 transition-all duration-300 p-3"
+    >
       <Image
         src={image}
         alt={title}
         width={200}
         height={200}
-        className="rounded-lg object-cover shadow-2xl shadow-black w-full aspect-square"
+        className="rounded-lg object-cover shadow-2xl shadow-black w-full h-[150px] aspect-square"
         priority
       />
-      <h1 className="text-white font-semibold truncate mt-3">{title}</h1>
+      <h1 className="text-white font-semibold mt-3 line-clamp-2">{title}</h1>
 
       {description && (
         <div
