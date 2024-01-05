@@ -26,22 +26,6 @@ const colors = [
   "from-zinc-700",
   "from-neutral-700",
   "from-stone-700",
-  "from-red-700",
-  "from-orange-700",
-  "from-amber-700",
-  "from-lime-700",
-  "from-green-700",
-  "from-emerald-700",
-  "from-teal-700",
-  "from-cyan-700",
-  "from-sky-700",
-  "from-blue-700",
-  "from-indigo-700",
-  "from-violet-700",
-  "from-purple-700",
-  "from-fuchsia-700",
-  "from-pink-700",
-  "from-rose-700",
   "from-black",
 ];
 
@@ -66,6 +50,8 @@ const Player = () => {
     if (!songInfo) {
       spotifyApi.getMyCurrentPlayingTrack().then((data) => {
         setCurrentTrackId(data.body?.item?.id);
+        setRepeat(data.body?.item?.is_repeat);
+        setShuffleSong(data.body?.item?.shuffle);
 
         spotifyApi.getMyCurrentPlaybackState().then((data) => {
           setIsPlaying(data.body?.is_playing);
@@ -137,11 +123,10 @@ const Player = () => {
   };
 
   return (
-    <div className={`sticky bottom-20 sm:bottom-0`}>
+    <div>
       {songInfo && (
         <div
-          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}
-        >
+          className={`bg-gradient-to-b rounded sm:rounded-none shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}>
           <div className="flex items-center space-x-4">
             <Image
               src={songInfo?.album.images?.[0]?.url}
@@ -155,8 +140,7 @@ const Player = () => {
               <h3 className="font-semibold truncate">{songInfo?.name}</h3>
               <Link
                 href={`/artist/${songInfo?.artists?.[0]?.id}`}
-                className="text-neutral-400 hover:underline font-semibold text-xs sm:text-sm truncate"
-              >
+                className="text-neutral-400 hover:underline font-semibold text-xs sm:text-sm truncate">
                 {songInfo?.artists?.[0]?.name}
               </Link>
             </div>
@@ -166,7 +150,7 @@ const Player = () => {
             <ArrowsRightLeftIcon
               onClick={handleShuffle}
               className={`${
-                shuffle ? "text-green-500" : ""
+                shuffleSong ? "text-green-500" : ""
               } button hidden sm:inline-flex`}
             />
             <BackwardIcon

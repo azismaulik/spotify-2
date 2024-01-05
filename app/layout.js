@@ -29,8 +29,12 @@ export default async function RootLayout({ children }) {
               {children}
             </div>
           </main>
-          <Player />
-          <MenuMobile />
+          {session && (
+            <div className="sticky bottom-0">
+              <Player />
+              <MenuMobile />
+            </div>
+          )}
         </body>
       </html>
     </ClientProviders>
