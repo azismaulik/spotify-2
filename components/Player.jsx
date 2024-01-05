@@ -116,7 +116,7 @@ const Player = () => {
     <div>
       {songInfo && (
         <div
-          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 ${color} to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}>
+          className={`bg-gradient-to-b rounded shadow-xl shadow-neutral-800 mx-4 sm:mx-0 from-black to-neutral-900 text-white flex justify-between text-xs md:text-base px-4 md:px-8 py-3`}>
           <div className="flex items-center space-x-4">
             <Image
               src={songInfo?.album.images?.[0]?.url}
