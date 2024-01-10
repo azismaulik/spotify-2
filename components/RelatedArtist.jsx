@@ -48,8 +48,8 @@ const RelatedArtist = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mt-14">Artist Like {artistName}</h1>
-      <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-        {relatedArtists.slice(0, 6)?.map((artist, i) => (
+      <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+        {relatedArtists.slice(0, 7)?.map((artist, i) => (
           <Link
             href={`/artist/${artist?.id}`}
             key={i}

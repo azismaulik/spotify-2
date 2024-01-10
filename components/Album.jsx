@@ -24,7 +24,7 @@ const Album = ({
         alt={title}
         width={200}
         height={200}
-        className="rounded-lg object-cover shadow-2xl shadow-black w-full h-[150px] aspect-square"
+        className="rounded-lg object-cover shadow-2xl shadow-black w-full aspect-square"
         priority
       />
       <h1 className="text-white font-semibold mt-3 line-clamp-2">{title}</h1>
